@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* ---- Brand tokens (change colours here) ---- */
+:root {
+  --bg: #0d0805;
+  --brown: #5a3320;
+  --gold: #f5a623;
+  --amber: #ffcf70;
+  --cream: #fff6e5;
+}
+
+html { background: var(--bg); }
+body { margin: 0; background: var(--bg); color: var(--cream); font-family: "Manrope", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+::selection { background: var(--gold); color: var(--bg); }
+
+.font-display { font-family: "Anton", "Bebas Neue", Impact, sans-serif; letter-spacing: 0.01em; }
+.font-logo { font-family: "Fredoka", "Baloo 2", sans-serif; }
+
+.outline-text { color: transparent; -webkit-text-stroke: 1px rgba(255, 207, 112, 0.55); }
+
+/* faint film grain */
+.grain {
+  position: fixed; inset: -50%; z-index: 30; pointer-events: none; opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1s steps(4) infinite;
+}
+@keyframes grain { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} }
+.vignette { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse at center, transparent 40%, rgba(13,8,5,0.85) 100%); }
+
+.fallback-glow { filter: drop-shadow(0 0 60px rgba(245,166,35,0.45)); }
+
+/* buttons & links */
+.btn-primary { background: var(--gold); color: var(--bg); padding: 0.9rem 1.8rem; border-radius: 999px; font-weight: 700; transition: transform .3s, box-shadow .3s; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px -10px var(--gold); }
+.btn-ghost { border: 1px solid rgba(255,207,112,.45); color: var(--amber); padding: 0.9rem 1.8rem; border-radius: 999px; font-weight: 600; transition: background .3s; }
+.btn-ghost:hover { background: rgba(245,166,35,.12); }
+
+.link-u, .email-link { position: relative; display: inline-block; }
+.link-u::after, .email-link::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; height: 1px; width: 100%;
+  background: var(--gold); transform: scaleX(0); transform-origin: right; transition: transform .5s cubic-bezier(.7,0,.2,1);
+}
+.email-link::after { height: 2px; bottom: -0.05em; }
+.link-u:hover::after, .email-link:hover::after { transform: scaleX(1); transform-origin: left; }
+.email-link:hover { color: var(--amber); }
+
+/* custom crown cursor (fine pointers only) */
+.cursor { position: fixed; left: 0; top: 0; z-index: 100; width: 22px; height: 17px; margin: -8px 0 0 -11px; pointer-events: none; display: none; transition: width .3s, height .3s, margin .3s; filter: drop-shadow(0 0 6px rgba(245,166,35,.7)); }
+@media (pointer: fine) {
+  .cursor { display: block; }
+  body, a, button { cursor: none; }
+}
+.cursor.is-hover { width: 44px; height: 33px; margin: -16px 0 0 -22px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+  * { transition-duration: 0.01ms !important; }
+}
